@@ -19,18 +19,29 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_user
+    binding.pry
     @family = Family.new(session["family.regist_data"]["family"])
-    @user = User.new(user_params)
-      unless @user.valid?
-        render :new_user, status: :unprocessable_entity and return
-      end
-    @user = @family.users.build(user_params)
-    @family.save
-    session["family.regist_data"].clear
-    sign_in(:user, @user)
+    @user1_params = params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
+    @user2_params = params.require(:user2).permit(:nickname, :email, :password, :password_confirmation)
+    @user1 = @family.users.build(@user1_params)
+    @user2 = @family.users.build(@user2_params)
 
-    redirect_to root_path
+    if @user1.valid? && @user2.valid?
+      ActiveRecord::Base.transaction do
+        @family.save!
+        @user1.save!
+        @user2.save!
+      end
+  
+      session["family.regist_data"].clear
+      sign_in(:user, @user1) # or @user2, depending on your logic
+  
+      redirect_to root_path
+    else
+      render template: 'devise/registrations/new_user', status: :unprocessable_entity
+    end
   end
+      
 
   private
 
@@ -39,7 +50,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:nickname, :email, :password, :password_confirmation)
   end
 
 
