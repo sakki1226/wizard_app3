@@ -1,12 +1,39 @@
 <h2>Sign up</h2>
 
-<%= form_for(@family, url: user_registration_path) do |f| %>
-  <%= render "devise/shared/error_messages", resource: @family %>
+<%= form_for(@family_user, url: user_registration_path) do |f| %>
+  <%= render "devise/shared/error_messages", resource: @family_user %>
 
   <div class="field">
     <%= f.label :家族名 %><br />
     <%= f.text_field :name %>
   </div>
+
+  <p> ユーザー1</p>
+
+  <%= f.fields_for :user1 do |user1_fields| %>
+    <div class="field">
+      <%= user1_fields.label :nickname %><br />
+      <%= user1_fields.text_field :nickname %>
+    </div>
+
+    <div class="field">
+      <%= user1_fields.label :email %><br />
+      <%= user1_fields.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= user1_fields.label :password %>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= user1_fields.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= user1_fields.label :password_confirmation %><br />
+      <%= user1_fields.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Next" %>

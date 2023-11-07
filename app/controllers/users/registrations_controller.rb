@@ -5,15 +5,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   def new
-    @family = Family.new
+    @family_user = FamilyUser.new
+
   end
 
   def create
-    @family = Family.new(family_params)
-     unless @family.valid?
+    @family_user = FamilyUser.new(family_params)
+     unless @family_user.valid?
        render :new, status: :unprocessable_entity and return
      end
     session["family.regist_data"] = {family: @family.attributes}
+    session["devise.regist_data"] = {user: @user.attributes}
+    session["devise.regist_data"][:user]["password"] = params[:user][:password]
     @user = @family.users.build
     render template: 'devise/registrations/new_user', status: :accepted
   end
@@ -21,36 +24,34 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create_user
     binding.pry
     @family = Family.new(session["family.regist_data"]["family"])
-    @user1_params = params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
-    @user2_params = params.require(:user2).permit(:nickname, :email, :password, :password_confirmation)
-    @user1 = @family.users.build(@user1_params)
-    @user2 = @family.users.build(@user2_params)
+    @user1 = User.new(user1_params)
+    @user2 = User.new(user2_params)
 
-    if @user1.valid? && @user2.valid?
-      ActiveRecord::Base.transaction do
-        @family.save!
-        @user1.save!
-        @user2.save!
+      unless @user1.valid? && @user2.valid?
+        render :new_user, status: :unprocessable_entity and return
       end
-  
-      session["family.regist_data"].clear
-      sign_in(:user, @user1) # or @user2, depending on your logic
-  
-      redirect_to root_path
-    else
-      render template: 'devise/registrations/new_user', status: :unprocessable_entity
-    end
+    @user1 = @family.users.build(user1_params)
+    @user2 = @family.users.build(user1_params)
+    @family.save
+    sign_in(:user, @user1)
+
+    redirect_to root_path
+    
   end
       
 
   private
 
   def family_params
-    params.require(:family).permit(:name)
+    params.require(:family_user).permit(:name, user1: [:nickname, :email, :password, :password_confirmation])
   end
 
-  def user_params
-    params.require(:user).permit(:nickname, :email, :password, :password_confirmation)
+  def user1_params
+    params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
+  end
+
+  def user2_params
+    params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
   end
 
 
