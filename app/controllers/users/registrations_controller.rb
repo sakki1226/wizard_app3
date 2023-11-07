@@ -10,19 +10,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+    name = params[:family_user][:name]
+    user1_info = params[:family_user][:user1]
+    user2_info = params[:family_user][:user2]
+  
     @family_user = FamilyUser.new(family_params)
-     unless @family_user.valid?
-       render :new, status: :unprocessable_entity and return
-     end
-    session["family.regist_data"] = {family: @family.attributes}
-    session["devise.regist_data"] = {user: @user.attributes}
-    session["devise.regist_data"][:user]["password"] = params[:user][:password]
-    @user = @family.users.build
-    render template: 'devise/registrations/new_user', status: :accepted
+  
+    if @family_user.valid?
+      session["family.regist_data"] = { family: @family_user.attributes, user1: user1_info }
+      session["devise.regist_data"] = { user: user1_info }
+      session["devise.regist_data"][:user]["password"] = params[:user][:password]
+      render template: 'devise/registrations/new_user2', status: :accepted
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def create_user
-    binding.pry
     @family = Family.new(session["family.regist_data"]["family"])
     @user1 = User.new(user1_params)
     @user2 = User.new(user2_params)
@@ -45,6 +49,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def family_params
     params.require(:family_user).permit(:name, user1: [:nickname, :email, :password, :password_confirmation])
   end
+
 
   def user1_params
     params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
