@@ -14,16 +14,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       unless @family_user.valid?
         render :new, status: :unprocessable_entity and return
       end
-
-      session["family.regist_data"] = { family: @family_user, user1: user1_info }
-      session["devise.regist_data"] = { user: user1_info }
-      session["devise.regist_data"][:user]["password"] = params[:user][:password]
-      @user = @family.users.build
-      render template: 'devise/registrations/new_user2', status: :accepted
+    session["family.regist_data"] = { family: @family_user }
+    render template: 'devise/registrations/new_user', status: :accepted
+    
   end
 
   def create_user
-    @family = Family.new(session["family.regist_data"]["family"])
+
+    @family_user = FamilyUser.new(session["family.regist_data"]["family"])
     @user1 = User.new(user1_params)
     @user2 = User.new(user2_params)
 
