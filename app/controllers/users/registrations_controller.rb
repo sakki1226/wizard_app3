@@ -4,6 +4,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+  def index
+  end
+
   def new
     @family_user = FamilyUser.new
 
@@ -14,23 +17,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
       unless @family_user.valid?
         render :new, status: :unprocessable_entity and return
       end
-    session["family.regist_data"] = { family: @family_user }
+    session["family.regist_data"] = { family: family_params }
     render template: 'devise/registrations/new_user', status: :accepted
     
   end
 
   def create_user
-
     @family_user = FamilyUser.new(session["family.regist_data"]["family"])
     @user1 = User.new(user1_params)
     @user2 = User.new(user2_params)
+    binding.pry
 
       unless @user1.valid? && @user2.valid?
         render :new_user, status: :unprocessable_entity and return
       end
     @user1 = @family.users.build(user1_params)
     @user2 = @family.users.build(user1_params)
-    @family.save
+    @family_user.save
+    session["family.regist_data"]["family"].clear
     sign_in(:user, @user1)
 
     redirect_to root_path
@@ -50,7 +54,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def user2_params
-    params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
+    params.require(:user2).permit(:nickname, :email, :password, :password_confirmation)
   end
 
 
