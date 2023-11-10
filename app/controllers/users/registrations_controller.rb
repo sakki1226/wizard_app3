@@ -23,8 +23,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_user
-    binding.pry
     @family_user = FamilyUser.new(session["family.regist_data"]["family"])
+
     
     @user1 = User.new(user1_params)
     @user2 = User.new(user2_params)
@@ -52,7 +52,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
   def user1_params
-    params.require(:user1).permit(:nickname, :email, :password, :password_confirmation)
+    params.require(:family_user).require(:user1).permit(:nickname, :email, :password, :password_confirmation)
   end
 
   def user2_params

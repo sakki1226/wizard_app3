@@ -3,6 +3,7 @@ class FamilyUser
   attr_accessor :name, :user1, :user2
 
   validates :name, presence: true
+  
 
   def save
     family = Family.create(name: name)
