@@ -23,10 +23,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_user
+    binding.pry
     @family_user = FamilyUser.new(session["family.regist_data"]["family"])
+    
     @user1 = User.new(user1_params)
     @user2 = User.new(user2_params)
-    binding.pry
+    @family = Family.new(name: session["family.regist_data"]["family"]["name"])
 
       unless @user1.valid? && @user2.valid?
         render :new_user, status: :unprocessable_entity and return

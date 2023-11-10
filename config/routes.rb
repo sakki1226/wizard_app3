@@ -3,8 +3,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   devise_scope :user do
-    get 'user', to: 'users/registrations#new_user'
-    post 'user', to: 'users/registrations#create_user'
+    get 'users', to: 'users/registrations#new_user'
+    post 'users', to: 'users/registrations#create_user'
   end
   
   root to: "home#index"
