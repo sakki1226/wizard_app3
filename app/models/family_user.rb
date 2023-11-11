@@ -6,7 +6,7 @@ class FamilyUser
   
 
   def save
-    family = Family.create(name: name)
+
     user1_info = user1 
     user2_info = user2 
 

@@ -23,7 +23,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_user
-    @family_user = FamilyUser.new(session["family.regist_data"]["family"])
+    family_user_params = session["family.regist_data"]["family"]
+    family_user_params["user2"] = user2_params.to_h
+    @family_user = FamilyUser.new(family_user_params)
 
     @user1 = User.new(session["family.regist_data"]["family"]["user1"])
     @user2 = User.new(user2_params)
@@ -39,7 +41,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       unless @user1.save && @user2.save
         render :new_user, status: :unprocessable_entity and return
       end
-      binding.pry
 
       @family_user.save
       session["family.regist_data"]["family"].clear
@@ -58,9 +59,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params.require(:family_user).permit(:name, user1: [:nickname, :email, :password, :password_confirmation])
   end
 
-  def user1_params
-    params.require(:family_user).permit(user1: [:nickname, :email, :password, :password_confirmation])
-  end
+
 
   def user2_params
     params.require(:family_user).require(:user2).permit([:nickname, :email, :password, :password_confirmation])
