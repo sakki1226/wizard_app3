@@ -41,9 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       unless @user1.save && @user2.save
         render :new_user, status: :unprocessable_entity and return
       end
-      binding.pry
 
-      @family_user.save
       session["family.regist_data"]["family"].clear
       sign_in(:user, @user1)
 
