@@ -11,19 +11,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @family_user = FamilyUser.new
   end
 
-  def new_user
-    @family_user = FamilyUser.new
-  end
-
   def create
     @family_user = FamilyUser.new(family_params)
       unless @family_user.valid?
+        session[:family_user_errors] = @family_user.errors.full_messages
         render :new, status: :unprocessable_entity and return
       end
     session["family.regist_data"] = { family: family_params }
     render template: 'devise/registrations/new_user', status: :accepted
-    
   end
+
+  def new_user
+    @family_user = FamilyUser.new(family_params)
+    binding.pry
+  end
+    
 
   def create_user
     family_user_params = session["family.regist_data"]["family"]
@@ -36,6 +38,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @family = Family.new(name: session["family.regist_data"]["family"]["name"])
 
     unless @user1.valid? && @user2.valid?
+      @family_user.errors.add(:base, "Some errors occurred") 
       render :new_user, status: :unprocessable_entity and return
     end
 
@@ -43,6 +46,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @user1.family = @user2.family = @family
 
       unless @user1.save && @user2.save
+        @family_user.errors.add(:base, "Failed to save users")
         render :new_user, status: :unprocessable_entity and return
       end
 
@@ -51,6 +55,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
       redirect_to root_path
     else
+      @family_user.errors.add(:base, "Failed to save family")
       render :new_user, status: :unprocessable_entity and return
     end    
   end

@@ -1,7 +1,7 @@
 <h2>Sign up</h2>
 
 <%= form_for(@family_user, url: users_create_user_path) do |f| %>
-  <%= render "devise/shared/error_messages", resource: f.object %>
+  <%= render "devise/shared/error_messages", resource: @family_user %>
 
   
 
