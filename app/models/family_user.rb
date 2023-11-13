@@ -1,16 +1,10 @@
 class FamilyUser
   include ActiveModel::Model
-  attr_accessor :name, :user1, :user2, :nickname, :email, :password, :password_confirmation
+  attr_accessor :name, :user1, :user2, :nickname
 
   validates :name, presence: true
-
-  with_options if: :user1_present? do |user1|
-    user1.validates :nickname, :email, :password, :password_confirmation, presence: true
-  end
-
-  with_options if: :user2_present? do |user2|
-    user2.validates :nickname, :email, :password, :password_confirmation, presence: true
-  end
+  validate :validate_user1, if: :user1_present?
+  validate :validate_user2, if: :user2_present?
 
   def save
     family = Family.create(name: name)
@@ -48,5 +42,24 @@ class FamilyUser
   def user2_present?
     user2.present?
   end
+
+  def validate_user1
+    errors.add(:nickname, "can't be blank") unless user1[:nickname].present?
+    errors.add(:email, "can't be blank") unless user1[:email].present?
+    errors.add(:password, "can't be blank") unless user1[:password].present?
+    errors.add(:password_confirmation, "can't be blank") unless user1[:password_confirmation].present?
+    errors.add(:password_confirmation, "doesn't match Password") if user1[:password] != user1[:password_confirmation]
+    # Add more validations for user1 if needed
+  end
+
+  def validate_user2
+    errors.add(:nickname, "can't be blank") unless user2[:nickname].present?
+    errors.add(:email, "can't be blank") unless user2[:email].present?
+    errors.add(:password, "can't be blank") unless user2[:password].present?
+    errors.add(:password_confirmation, "can't be blank") unless user2[:password_confirmation].present?
+    errors.add(:password_confirmation, "doesn't match Password") if user2[:password] != user2[:password_confirmation]
+    # Add more validations for user2 if needed
+  end
 end
+
 

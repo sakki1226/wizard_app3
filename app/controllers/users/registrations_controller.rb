@@ -9,7 +9,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def new
     @family_user = FamilyUser.new
+  end
 
+  def new_user
+    @family_user = FamilyUser.new
   end
 
   def create
@@ -26,6 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     family_user_params = session["family.regist_data"]["family"]
     family_user_params["user2"] = user2_params.to_h
     @family_user = FamilyUser.new(family_user_params)
+
 
     @user1 = User.new(session["family.regist_data"]["family"]["user1"])
     @user2 = User.new(user2_params)
