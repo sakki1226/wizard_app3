@@ -36,6 +36,7 @@ class FamilyUser
   private
 
   def user1_present?
+    binding.pry
     user1.present?
   end
 
@@ -54,16 +55,15 @@ class FamilyUser
 
   def validate_user2
     errors.add(:user2, "can't be blank") unless user2.present?
-
     if user2.present?
-    errors.add(:nickname, "can't be blank") unless user2[:nickname].present?
-    errors.add(:email, "can't be blank") unless user2[:email].present?
-    errors.add(:password, "can't be blank") unless user2[:password].present?
-    errors.add(:password_confirmation, "can't be blank") unless user2[:password_confirmation].present?
-    errors.add(:password_confirmation, "doesn't match Password") if user2[:password] != user2[:password_confirmation]
+      errors.add(:nickname, "can't be blank") unless user2[:nickname].present?
+      errors.add(:email, "can't be blank") unless user2[:email].present?
+      errors.add(:password, "can't be blank") unless user2[:password].present?
+      errors.add(:password_confirmation, "can't be blank") unless user2[:password_confirmation].present?
+      errors.add(:password_confirmation, "doesn't match Password") if user2[:password] != user2[:password_confirmation]
     end
     # Add more validations for user2 if needed
   end
+
+  # Add more validations for user2 if needed
 end
-
-
