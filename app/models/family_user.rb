@@ -46,24 +46,24 @@ class FamilyUser
     def validate_user1
       return unless user1.present?
 
-      errors.add(:nickname, "can't be blank") unless user1[:nickname].present?
-      errors.add(:email, "can't be blank") unless user1[:email].present?
-      errors.add(:password, "can't be blank") unless user1[:password].present?
-      errors.add(:password_confirmation, "can't be blank") unless user1[:password_confirmation].present?
-      errors.add(:password_confirmation, "doesn't match Password") if user1[:password] != user1[:password_confirmation]
+      errors.add(:nickname, "(user1)を入力してください") unless user1["nickname"].present?
+      errors.add(:email, "(user1)を入力してください") unless user1["email"].present?
+      errors.add(:password, "(user1)を入力してください") unless user1["password"].present?
+      errors.add(:password_confirmation, "(user1)を入力してください") unless user1["password_confirmation"].present?
+      errors.add(:password_confirmation, "(user1)が一致しません") if user1["password"] != user1["password_confirmation"]
       # Add more validations for user1 if needed
     end
 
   def validate_user2
     return unless user2.present?
 
-    errors.add(:user2, "can't be blank")
-    # errors.add(:nickname, "can't be blank") unless user2[:nickname].present?
-    # errors.add(:email, "can't be blank") unless user2[:email].present?
-    # errors.add(:password, "can't be blank") unless user2[:password].present?
-    # errors.add(:password_confirmation, "can't be blank") unless user2[:password_confirmation].present?
-    # errors.add(:password_confirmation, "doesn't match Password") if user2[:password] != user2[:password_confirmation]
-    # Add more validations for user2 if needed
+    # errors.add(:user2, "can't be blank user2")  
+    errors.add(:nickname, "can't be blank user2") unless user2["nickname"].present?
+    errors.add(:email, "can't be blank user2") unless user2["email"].present?
+    errors.add(:password, "can't be blank user2") unless user2["password"].present?
+    errors.add(:password_confirmation, "can't be blank user2") unless user2["password_confirmation"].present?
+    errors.add(:password_confirmation, "doesn't match Password user2") if user2["password"] != user2["password_confirmation"]
+    #Add more validations for user2 if needed
   end
 
   # Add more validations for user2 if needed

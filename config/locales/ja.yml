@@ -1,0 +1,18 @@
+ja:
+  activemodel:
+    attributes:
+      family_user:
+        name: "家族名"
+      user:
+        nickname: "ニックネーム"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワードの確認"
+    errors:
+      models:
+        family_user:
+          blank: "%{attribute}を入力してください"
+      messages:
+        blank: "%{attribute}を入力してください"
+        taken: "既に存在します"
+        confirmation: "がパスワードと一致しません"
