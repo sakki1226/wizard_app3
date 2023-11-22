@@ -12,17 +12,17 @@
 
   <%= f.fields_for :user1 do |user1_fields| %>
     <div class="field">
-      <%= user1_fields.label :nickname %><br />
+      <%= user1_fields.label :ニックネーム %><br />
       <%= user1_fields.text_field :nickname %>
     </div>
 
     <div class="field">
-      <%= user1_fields.label :email %><br />
+      <%= user1_fields.label :メールアドレス %><br />
       <%= user1_fields.email_field :email, autofocus: true, autocomplete: "email" %>
     </div>
 
     <div class="field">
-      <%= user1_fields.label :password %>
+      <%= user1_fields.label :パスワード %>
       <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
@@ -30,7 +30,7 @@
     </div>
 
     <div class="field">
-      <%= user1_fields.label :password_confirmation %><br />
+      <%= user1_fields.label :パスワードの確認 %><br />
       <%= user1_fields.password_field :password_confirmation, autocomplete: "new-password" %>
     </div>
   <% end %>

@@ -1,7 +1,7 @@
 <h2>Sign up</h2>
 
 <%= form_for(@family_user, url: users_create_user_path) do |f| %>
-  <%= render "devise/shared/error_messages2", resource: @family_user %>
+  <%= render "devise/shared/error_messages", resource: @family_user %>
 
   
 
@@ -9,17 +9,17 @@
 
   <%= f.fields_for :user2 do |user2_fields| %>
     <div class="field">
-      <%= user2_fields.label :nickname %><br />
+      <%= user2_fields.label :ニックネーム %><br />
       <%= user2_fields.text_field :nickname %>
     </div>
 
     <div class="field">
-      <%= user2_fields.label :email %><br />
+      <%= user2_fields.label :メールアドレス %><br />
       <%= user2_fields.email_field :email, autofocus: true, autocomplete: "email" %>
     </div>
 
     <div class="field">
-      <%= user2_fields.label :password %>
+      <%= user2_fields.label :パスワード %>
       <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
@@ -27,7 +27,7 @@
     </div>
 
     <div class="field">
-      <%= user2_fields.label :password_confirmation %><br />
+      <%= user2_fields.label :パスワードの確認 %><br />
       <%= user2_fields.password_field :password_confirmation, autocomplete: "new-password" %>
     </div>
   <% end %>
