@@ -46,7 +46,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @user1.family = @user2.family = @family
 
       unless @user1.save && @user2.save
-        @family_user.errors.add(:base, "Failed to save users")
+        @family_user.errors.add(:base, "２人のユーザーを登録してください")
         render :new_user, status: :unprocessable_entity and return
       end
 
@@ -55,7 +55,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
       redirect_to root_path
     else
-      @family_user.errors.add(:base, "Failed to save family")
+      @family_user.errors.add(:base, "この家族名は既に存在しています")
       render :new_user, status: :unprocessable_entity and return
     end    
   end

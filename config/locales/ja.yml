@@ -9,3 +9,9 @@ ja:
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワードの確認"
+    errors:
+      models:
+        family_user:
+          attributes:
+            name:
+              taken: "その家族名はすでに使用されています"
