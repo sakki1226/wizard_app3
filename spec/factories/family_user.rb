@@ -1,24 +1,21 @@
 FactoryBot.define do
   factory :family_user do
-    sequence(:name) { |n| "Family#{n}" }
-
-    trait :with_user1 do
-      after(:build) do |family_user|
-        family_user.user1 = build(:user)
-      end
-    end
-
-    trait :with_user2 do
-      after(:build) do |family_user|
-        family_user.user2 = build(:user)
-      end
-    end
-  end
-
-  factory :user do
-    sequence(:nickname) { |n| "User#{n}" }
-    email { Faker::Internet.email }
-    password { Faker::Internet.password(min_length: 6) }
-    password_confirmation { |attrs| attrs[:password] }
+    name { Faker::Name.unique.name }
+    user1 {
+      {
+        nickname: Faker::Name.unique.first_name,
+        email: Faker::Internet.unique.email,
+        password: Faker::Internet.password(min_length: 8),
+        password_confirmation: Faker::Internet.password(min_length: 8)
+      }
+    }
+    user2 {
+      {
+        nickname: Faker::Name.unique.first_name,
+        email: Faker::Internet.unique.email,
+        password: Faker::Internet.password(min_length: 8),
+        password_confirmation: Faker::Internet.password(min_length: 8)
+      }
+    }
   end
 end

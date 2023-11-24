@@ -51,7 +51,7 @@ class FamilyUser
       errors.add(:password, "(ユーザー1)を入力してください") unless user1["password"].present?
       errors.add(:password_confirmation, "(ユーザー1)を入力してください") unless user1["password_confirmation"].present?
       errors.add(:password_confirmation, "(ユーザー1)が一致しません") if user1["password"] != user1["password_confirmation"]
-      # Add more validations for user1 if needed
+      
     end
 
   def validate_user2
