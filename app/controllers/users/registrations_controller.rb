@@ -39,6 +39,7 @@
       @family = Family.new(name: session["family.regist_data"]["family"]["name"])
 
       unless @family_user.valid?
+        binding.pry
         render :new_user, status: :unprocessable_entity and return
       end
 

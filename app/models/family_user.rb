@@ -46,11 +46,11 @@ class FamilyUser
   def validate_user1
     return unless user1.present?
 
-    errors.add(:nickname, "(ユーザー1)を入力してください") unless user1["nickname"].present?
-    errors.add(:email, "(ユーザー1)を入力してください") unless user1["email"].present?
-    errors.add(:password, "(ユーザー1)を入力してください") unless user1["password"].present?
-    errors.add(:password_confirmation, "(ユーザー1)を入力してください") unless user1["password_confirmation"].present?
-    errors.add(:password_confirmation, "(ユーザー1)が一致しません") if user1["password"] != user1["password_confirmation"]
+    errors.add(:nickname, "(ユーザー1)を入力してください") unless user1[:nickname].present?
+    errors.add(:email, "(ユーザー1)を入力してください") unless user1[:email].present?
+    errors.add(:password, "(ユーザー1)を入力してください") unless user1[:password].present?
+    errors.add(:password_confirmation, "(ユーザー1)を入力してください") unless user1[:password_confirmation].present?
+    errors.add(:password_confirmation, "(ユーザー1)が一致しません") if user1[:password] != user1[:password_confirmation]
     
   end
 
@@ -58,11 +58,11 @@ class FamilyUser
     return unless user2.present?
 
     # errors.add(:user2, "can't be blank user2")  
-    errors.add(:nickname, "(ユーザー2)を入力してください") unless user2["nickname"].present?
-    errors.add(:email, "(ユーザー2)を入力してください") unless user2["email"].present?
-    errors.add(:password, "(ユーザー2)を入力してください") unless user2["password"].present?
-    errors.add(:password_confirmation, "(ユーザー2)を入力してください") unless user2["password_confirmation"].present?
-    errors.add(:password_confirmation, "(ユーザー2)が一致しません") if user2["password"] != user2["password_confirmation"]
+    errors.add(:nickname, "(ユーザー2)を入力してください") unless user2[:nickname].present?
+    errors.add(:email, "(ユーザー2)を入力してください") unless user2[:email].present?
+    errors.add(:password, "(ユーザー2)を入力してください") unless user2[:password].present?
+    errors.add(:password_confirmation, "(ユーザー2)を入力してください") unless user2[:password_confirmation].present?
+    errors.add(:password_confirmation, "(ユーザー2)が一致しません") if user2[:password] != user2[:password_confirmation]
     #Add more validations for user2 if needed
   end
 
