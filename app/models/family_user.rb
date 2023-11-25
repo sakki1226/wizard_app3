@@ -43,16 +43,16 @@ class FamilyUser
     user2.present?
   end
 
-    def validate_user1
-      return unless user1.present?
+  def validate_user1
+    return unless user1.present?
 
-      errors.add(:nickname, "(ユーザー1)を入力してください") unless user1["nickname"].present?
-      errors.add(:email, "(ユーザー1)を入力してください") unless user1["email"].present?
-      errors.add(:password, "(ユーザー1)を入力してください") unless user1["password"].present?
-      errors.add(:password_confirmation, "(ユーザー1)を入力してください") unless user1["password_confirmation"].present?
-      errors.add(:password_confirmation, "(ユーザー1)が一致しません") if user1["password"] != user1["password_confirmation"]
-      
-    end
+    errors.add(:nickname, "(ユーザー1)を入力してください") unless user1["nickname"].present?
+    errors.add(:email, "(ユーザー1)を入力してください") unless user1["email"].present?
+    errors.add(:password, "(ユーザー1)を入力してください") unless user1["password"].present?
+    errors.add(:password_confirmation, "(ユーザー1)を入力してください") unless user1["password_confirmation"].present?
+    errors.add(:password_confirmation, "(ユーザー1)が一致しません") if user1["password"] != user1["password_confirmation"]
+    
+  end
 
   def validate_user2
     return unless user2.present?

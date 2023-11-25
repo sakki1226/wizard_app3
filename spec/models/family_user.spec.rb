@@ -17,16 +17,18 @@ RSpec.describe FamilyUser, type: :model do
         @family_user.valid?
         expect(@family_user.errors.full_messages).to include("家族名を入力してください")
       end
-      it 'user1のニックネーム空だと保存できないこと' do
-        @family_user.user1[:nickname] = ''
+      it 'user1のニックネームが空だと保存できないこと' do
+        @family_user.user1["nickname"] = ''
         @family_user.valid?
+        binding.pry
         expect(@family_user.errors.full_messages).to include("ニックネーム(ユーザー1)を入力してください")
       end
-      it 'user2が空だと保存できないこと' do
-        @family_user.user2 = ''
+      it 'user1のメールアドレスが空だと保存できないこと' do
+        @family_user.user1["email"] = ''
         @family_user.valid?
-        expect(@family_user.errors.full_messages).to include("この家族名は既に存在しています")
+        expect(@family_user.errors.full_messages).to include("メールアドレス(ユーザー1)を入力してください")
       end
+
     end
   end
 end

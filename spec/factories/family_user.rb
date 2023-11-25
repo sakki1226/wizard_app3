@@ -1,21 +1,23 @@
 FactoryBot.define do
   factory :family_user do
-    name { Faker::Name.unique.name }
-    user1 {
+    name { '立花' }
+
+    user1 do
       {
-        nickname: Faker::Name.unique.first_name,
-        email: Faker::Internet.unique.email,
-        password: Faker::Internet.password(min_length: 8),
-        password_confirmation: Faker::Internet.password(min_length: 8)
+        nickname: 'はなこ',
+        email: 'sample@sample',
+        password: '00000000',
+        password_confirmation: '00000000'
       }
-    }
-    user2 {
+    end
+
+    user2 do
       {
-        nickname: Faker::Name.unique.first_name,
-        email: Faker::Internet.unique.email,
-        password: Faker::Internet.password(min_length: 8),
-        password_confirmation: Faker::Internet.password(min_length: 8)
+        nickname: 'たろう',
+        email: 'sample1@sample',
+        password: '99999999',
+        password_confirmation: '99999999'
       }
-    }
+    end
   end
 end
