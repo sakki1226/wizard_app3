@@ -4,19 +4,19 @@ FactoryBot.define do
 
     user1 do
       {
-        nickname: 'はなこ',
-        email: 'sample@sample',
-        password: '00000000',
-        password_confirmation: '00000000'
+        "nickname"=> 'はなこ',
+        "email"=>  'sample@sample',
+        "password"=>  '00000000',
+        "password_confirmation"=>  '00000000'
       }
     end
 
     user2 do
       {
-        nickname: 'たろう',
-        email: 'sample1@sample',
-        password: '99999999',
-        password_confirmation: '99999999'
+        "nickname"=>  'たろう',
+        "email"=>  'sample1@sample',
+        "password"=>  '99999999',
+        "password_confirmation"=>  '99999999'
       }
     end
   end
